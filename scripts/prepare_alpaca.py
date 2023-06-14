@@ -18,7 +18,7 @@ TEST_SPLIT_SIZE = 500
 IGNORE_INDEX = -1
 MASK_INPUTS = False  # as in alpaca-lora
 SEED = 42
-FILE: 'Finetuned Falcon/lit-parrot/nlu-asdiv-dataset/dataset/ASDiv_clean.json'
+FILE: 'data/ASDiv_clean.json'
 
 def prepare(
     destination_path: Path = Path(FILE),
