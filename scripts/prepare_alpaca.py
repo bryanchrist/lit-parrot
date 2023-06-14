@@ -19,7 +19,7 @@ IGNORE_INDEX = -1
 MASK_INPUTS = False  # as in alpaca-lora
 SEED = 42
 FILE: 'data/ASDiv_clean.json'
-
+#pizza
 def prepare(
     destination_path: Path = Path(FILE),
     checkpoint_dir: Path = Path("checkpoints/tiiuae/falcon-40b"),
