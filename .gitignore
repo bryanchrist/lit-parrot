@@ -5,8 +5,7 @@ __pycache__
 build
 
 # data
-data
-checkpoints
+#checkpoints
 out
 wandb
 
