@@ -19,7 +19,23 @@ from generate.base import generate
 from lit_parrot.adapter import Parrot, Config, mark_only_adapter_as_trainable, adapter_state_from_state_dict
 from lit_parrot.tokenizer import Tokenizer
 from lit_parrot.utils import lazy_load, check_valid_checkpoint_dir
-from scripts.prepare_alpaca import generate_prompt
+
+def generate_prompt(example):
+    """Generates a standardized message to prompt the model with an instruction, optional input and a
+    'response' field."""
+
+    #if example["input"]:
+   #     return (
+    #        "Below is an instruction that describes a task, paired with an input that provides further context. "
+    #        "Write a response that appropriately completes the request.\n\n"
+    #        f"### Instruction:\n{example['instruction']}\n\n### Input:\n{example['input']}\n\n### Response:"
+    #    )
+    #else:
+    return (
+            "Below is an instruction that describes a task. "
+            "Write a response that appropriately completes the request.\n\n"
+            f"### Instruction:\n{example['instruction']}\n\n### Response:"
+        )
 
 eval_interval = 600
 save_interval = 1000
@@ -47,14 +63,14 @@ ds_config = {
 
 
 def setup(
-    data_dir: Path = Path("data/alpaca"),
-    checkpoint_dir: Path = Path("checkpoints/stabilityai/stablelm-base-alpha-3b"),
-    out_dir: Path = Path("out/adapter/alpaca"),
+    data_dir: Path = Path("data"),
+    checkpoint_dir: Path = Path("checkpoints/tiiuae/falcon-40b"),
+    out_dir: Path = Path("out/adapter/ASDiv"),
     precision: Optional[str] = None,
     tpu: bool = False,
 ):
     if precision is None:
-        precision = "32-true" if tpu else "16-true"
+        precision = "32-true" if tpu else "16-mixed"
     strategy = (
         "auto"
         if devices <= 1
@@ -68,9 +84,9 @@ def setup(
 
 def main(
     fabric: L.Fabric = None,
-    data_dir: Path = Path("data/alpaca"),
-    checkpoint_dir: Path = Path("checkpoints/stabilityai/stablelm-base-alpha-3b"),
-    out_dir: Path = Path("out/adapter/alpaca"),
+    data_dir: Path = Path("data"),
+    checkpoint_dir: Path = Path("checkpoints/tiiuae/falcon-40b"),
+    out_dir: Path = Path("out/adapter/ASDiv"),
 ):
     check_valid_checkpoint_dir(checkpoint_dir)
     fabric.seed_everything(1337 + fabric.global_rank)
@@ -83,8 +99,9 @@ def main(
     config = Config.from_name(name=checkpoint_dir.name)
     checkpoint_path = checkpoint_dir / "lit_model.pth"
     fabric.print(f"Loading model {str(checkpoint_path)!r} with {config.__dict__}")
-    with fabric.init_module():
-        model = Parrot(config)
+    print(type(fabric))
+    
+    model = Parrot(config)
     with lazy_load(checkpoint_path) as checkpoint:
         model.load_state_dict(checkpoint, strict=False)
 
