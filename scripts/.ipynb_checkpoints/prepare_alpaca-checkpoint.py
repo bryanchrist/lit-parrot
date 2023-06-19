@@ -18,12 +18,24 @@ TEST_SPLIT_SIZE = 500
 IGNORE_INDEX = -1
 MASK_INPUTS = False  # as in alpaca-lora
 SEED = 42
-FILE: 'data/ASDiv_clean.json'
+FILE= 'data/ASDiv_clean.json'
 
+from torch.utils.data import Dataset
+
+class MyDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        return self.data[index]
+    
 def prepare(
     destination_path: Path = Path(FILE),
     checkpoint_dir: Path = Path("checkpoints/tiiuae/falcon-40b"),
-    test_split_size: int = 2000,
+    test_split_size: int = 500,
     max_seq_length: int = 256,
     seed: int = 42,
     mask_inputs: bool = False,  # as in alpaca-lora
@@ -33,21 +45,33 @@ def prepare(
 
     tokenizer = Tokenizer(checkpoint_dir / "tokenizer.json", checkpoint_dir / "tokenizer_config.json")
 
+    #with open(destination_path, "r") as file:
+       # data = file.readlines()
+       # data = [json.loads(line) for line in data]
+
     with open(destination_path, "r") as file:
-        data = file.readlines()
-        data = [json.loads(line) for line in data]
+        data = [json.loads(line) for line in file]
+
+    data = data[0]
+    dataset = MyDataset(data)
+    
+    # Calculate lengths based on proportions
+    total_length = len(dataset)
+    train_split_size = .7
+    test_split_size = .3
 
     # Partition the dataset into train and test
-    train_split_size = len(data) - test_split_size
     train_set, test_set = random_split(
-        data, lengths=(train_split_size, test_split_size), generator=torch.Generator().manual_seed(seed)
-    )
-    train_set, test_set = list(train_set), list(test_set)
+    dataset, lengths=[train_split_size, test_split_size], generator=torch.Generator().manual_seed(seed)
+)
+
+
 
     print(f"train has {len(train_set):,} samples")
     print(f"val has {len(test_set):,} samples")
 
     print("Processing train split ...")
+    file_path = destination_path.resolve()
     train_set = [prepare_sample(sample, tokenizer, max_seq_length, mask_inputs) for sample in tqdm(train_set)]
     torch.save(train_set, file_path.parent / "train.pt")
 
@@ -108,17 +132,18 @@ def generate_prompt(example):
     """Generates a standardized message to prompt the model with an instruction, optional input and a
     'response' field."""
 
-    if example["input"]:
-        return (
-            "Below is an instruction that describes a task, paired with an input that provides further context. "
-            "Write a response that appropriately completes the request.\n\n"
-            f"### Instruction:\n{example['instruction']}\n\n### Input:\n{example['input']}\n\n### Response:"
-        )
+    #if example["input"]:
+   #     return (
+    #        "Below is an instruction that describes a task, paired with an input that provides further context. "
+    #        "Write a response that appropriately completes the request.\n\n"
+    #        f"### Instruction:\n{example['instruction']}\n\n### Input:\n{example['input']}\n\n### Response:"
+    #    )
+    #else:
     return (
-        "Below is an instruction that describes a task. "
-        "Write a response that appropriately completes the request.\n\n"
-        f"### Instruction:\n{example['instruction']}\n\n### Response:"
-    )
+            "Below is an instruction that describes a task. "
+            "Write a response that appropriately completes the request.\n\n"
+            f"### Instruction:\n{example['instruction']}\n\n### Response:"
+        )
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 # torch>=2.1.0dev
 pytorch-lightning
+lightning
+FastAPI
 #lightning @ git+https://github.com/Lightning-#AI/lightning@master
 tokenizers
 jsonargparse[signatures]  # CLI
