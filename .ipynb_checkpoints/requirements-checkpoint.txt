@@ -8,5 +8,5 @@ jsonargparse[signatures]  # CLI
 bitsandbytes  # quantize
 datasets  # quantize/gptq.py
 zstandard  # prepare_redpajama.py
-BeautifulSoup
+beautifulsoup4
 
