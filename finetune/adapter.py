@@ -41,7 +41,7 @@ eval_interval = 600
 save_interval = 1000
 eval_iters = 100
 log_interval = 1
-devices = 1
+devices = 4
 
 # Hyperparameters
 learning_rate = 9e-3
@@ -184,6 +184,9 @@ def train(
         dt = time.time() - t0
         if iter_num % log_interval == 0:
             fabric.print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms")
+            with open("output.txt", "a") as f:
+                print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms", file=f)
+
 
 
 @torch.no_grad()
