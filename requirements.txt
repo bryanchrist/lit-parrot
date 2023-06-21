@@ -9,4 +9,5 @@ bitsandbytes  # quantize
 datasets  # quantize/gptq.py
 zstandard  # prepare_redpajama.py
 beautifulsoup4
+bs4
 
