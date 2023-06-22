@@ -41,7 +41,7 @@ eval_interval = 600
 save_interval = 1000
 eval_iters = 100
 log_interval = 1
-devices = 1
+devices = 4
 
 # Hyperparameters
 learning_rate = 9e-3
@@ -78,7 +78,7 @@ def setup(
     )
     # For multi-host TPU training, the device count for Fabric is limited to the count on a single host.
     fabric_devices = "auto" if (tpu and devices > 1) else devices
-    fabric = L.Fabric(devices=fabric_devices, strategy=strategy, precision=precision)
+    fabric = L.Fabric(devices=fabric_devices, strategy=strategy, precision=precision, accelerator='gpu')
     fabric.launch(main, data_dir, checkpoint_dir, out_dir)
 
 
@@ -184,6 +184,9 @@ def train(
         dt = time.time() - t0
         if iter_num % log_interval == 0:
             fabric.print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms")
+            with open("output.txt", "a") as f:
+                print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms", file=f)
+
 
 
 @torch.no_grad()
