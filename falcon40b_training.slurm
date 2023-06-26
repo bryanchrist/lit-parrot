@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -A sds-phd-2022
 #SBATCH -p gpu
-#SBATCH --hint=nomultithread #8GB per reserved CPU core if hyperthreading deactivated and 1/2 that when active
+##SBATCH --hint=nomultithread #8GB per reserved CPU core if hyperthreading deactivated and 1/2 that when active
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=0
 #SBATCH --gres=gpu:6
@@ -22,6 +22,7 @@ module purge
 #module load singularity
 #singularity run --nv pytorch_23.03-py3.sif python finetune/adapter.py 
 
+export 'PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512'
 module load anaconda
 module load cuda/11.4.2
 source activate falcon_40B
