@@ -190,7 +190,7 @@ def train(
         if iter_num % log_interval == 0:
             fabric.print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms")
             with open("output.txt", "a") as f:
-                print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms", file=f)
+                fabric.print(f"iter {iter_num}: loss {loss.item():.4f}, time: {dt*1000:.2f}ms", file=f)
 
 
 
