@@ -1,0 +1,29 @@
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+Traceback (most recent call last):
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 302, in <module>
+    CLI(setup)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/jsonargparse/_cli.py", line 85, in CLI
+    return _run_component(component, cfg_init)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/jsonargparse/_cli.py", line 147, in _run_component
+    return component(**cfg)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 85, in setup
+    fabric = L.Fabric(devices=fabric_devices, strategy=strategy, precision=precision, accelerator='auto')
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 98, in __init__
+    self._connector = _Connector(
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/connector.py", line 148, in __init__
+    self._set_parallel_devices_and_init_accelerator()
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/connector.py", line 348, in _set_parallel_devices_and_init_accelerator
+    self._devices_flag = accelerator_cls.parse_devices(self._devices_flag)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/accelerators/cuda.py", line 50, in parse_devices
+    return _parse_gpu_ids(devices, include_cuda=True)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/utilities/device_parser.py", line 102, in _parse_gpu_ids
+    return _sanitize_gpu_ids(gpus, include_cuda=include_cuda, include_mps=include_mps)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/utilities/device_parser.py", line 134, in _sanitize_gpu_ids
+    raise MisconfigurationException(
+lightning.fabric.utilities.exceptions.MisconfigurationException: You requested gpu: [0, 1, 2, 3]
+ But your machine only has: [0]

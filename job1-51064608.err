@@ -1,0 +1,108 @@
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/plugins/environments/slurm.py:165: PossibleUserWarning: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python finetune/adapter.py ...
+  rank_zero_warn(
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+[rank: 2] Global seed set to 1339
+[rank: 1] Global seed set to 1338
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+[rank: 3] Global seed set to 1340
+Enabling DeepSpeed FP16.
+[rank: 0] Global seed set to 1337
+Traceback (most recent call last):
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 302, in <module>
+    CLI(setup)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/jsonargparse/_cli.py", line 85, in CLI
+    return _run_component(component, cfg_init)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/jsonargparse/_cli.py", line 147, in _run_component
+    return component(**cfg)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 86, in setup
+    fabric.launch(main, data_dir, checkpoint_dir, out_dir)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 664, in launch
+    return self._strategy.launcher.launch(function, *args, **kwargs)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/strategies/launchers/subprocess_script.py", line 90, in launch
+    return function(*args, **kwargs)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 754, in _run_with_setup
+    return run_function(*args, **kwargs)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 108, in main
+    model = Parrot(config)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/lit_parrot/adapter.py", line 48, in __init__
+    h=nn.ModuleList(Block(config, i) for i in range(config.n_layer)),
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/container.py", line 279, in __init__
+    self += modules
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/container.py", line 320, in __iadd__
+    return self.extend(modules)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/container.py", line 401, in extend
+    for i, module in enumerate(modules):
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/lit_parrot/adapter.py", line 48, in <genexpr>
+    h=nn.ModuleList(Block(config, i) for i in range(config.n_layer)),
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/lit_parrot/adapter.py", line 125, in __init__
+    self.mlp = MLP(config)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/lit_parrot/model.py", line 252, in __init__
+    self.proj = nn.Linear(hidden_dim, config.n_embd, bias=config.bias)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/linear.py", line 96, in __init__
+    self.weight = Parameter(torch.empty((out_features, in_features), **factory_kwargs))
+RuntimeError: [enforce fail at alloc_cpu.cpp:75] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 1073741824 bytes. Error code 12 (Cannot allocate memory)
+Traceback (most recent call last):
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 302, in <module>
+    CLI(setup)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/jsonargparse/_cli.py", line 85, in CLI
+    return _run_component(component, cfg_init)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/jsonargparse/_cli.py", line 147, in _run_component
+    return component(**cfg)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 86, in setup
+    fabric.launch(main, data_dir, checkpoint_dir, out_dir)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 664, in launch
+    return self._strategy.launcher.launch(function, *args, **kwargs)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/strategies/launchers/subprocess_script.py", line 90, in launch
+    return function(*args, **kwargs)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 754, in _run_with_setup
+    return run_function(*args, **kwargs)
+  File "/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py", line 118, in main
+    model, optimizer = fabric.setup(model, optimizer)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 200, in setup
+    module = self._move_model_to_device(model=module, optimizers=list(optimizers))
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 780, in _move_model_to_device
+    model = self.to_device(model)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/fabric.py", line 456, in to_device
+    self._strategy.module_to_device(obj)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/strategies/ddp.py", line 121, in module_to_device
+    module.to(self.root_device)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1149, in to
+    return self._apply(convert)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/module.py", line 801, in _apply
+    module._apply(fn)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/module.py", line 801, in _apply
+    module._apply(fn)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/module.py", line 801, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/module.py", line 824, in _apply
+    param_applied = fn(param)
+  File "/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1147, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1024.00 MiB. GPU 0 has a total capacty of 10.76 GiB of which 544.31 MiB is free. Including non-PyTorch memory, this process has 10.21 GiB memory in use. Of the allocated memory 9.56 GiB is allocated by PyTorch, and 1.31 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

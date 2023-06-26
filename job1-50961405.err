@@ -1,0 +1,3 @@
+To execute the default application inside the container, run:
+singularity run --nv $CONTAINERDIR/pytorch-1.8.1.sif
+

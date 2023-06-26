@@ -1,0 +1,17 @@
+To execute the default application inside the container, run:
+singularity run --nv $CONTAINERDIR/pytorch-1.8.1.sif
+
+/usr/local/lib/python3.8/site-packages/requests/__init__.py:102: RequestsDependencyWarning: urllib3 (1.25.11) or chardet (None)/charset_normalizer (3.1.0) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({})/charset_normalizer ({}) doesn't match a supported "
+Traceback (most recent call last):
+  File "finetune/adapter_test.py", line 9, in <module>
+    import lightning as L
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/__init__.py", line 25, in <module>
+    from lightning.fabric.fabric import Fabric  # noqa: E402
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/fabric/__init__.py", line 29, in <module>
+    from lightning.fabric.fabric import Fabric  # noqa: E402
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/fabric/fabric.py", line 21, in <module>
+    import torch
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/torch/__init__.py", line 466, in <module>
+    for name in dir(_C):
+NameError: name '_C' is not defined

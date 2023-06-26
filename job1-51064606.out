@@ -1,0 +1,23 @@
+True
+cuda:0
+0
+[2023-06-24 21:35:11,782] [INFO] [real_accelerator.py:110:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2023-06-24 21:35:12,547] [WARNING] [comm.py:152:init_deepspeed_backend] NCCL backend in DeepSpeed not yet implemented
+True
+cuda:0
+0
+[2023-06-24 21:35:22,831] [INFO] [real_accelerator.py:110:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+True
+cuda:0
+0
+[2023-06-24 21:35:22,831] [INFO] [real_accelerator.py:110:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+True
+cuda:0
+0
+[2023-06-24 21:35:22,832] [INFO] [real_accelerator.py:110:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2023-06-24 21:35:23,488] [WARNING] [comm.py:152:init_deepspeed_backend] NCCL backend in DeepSpeed not yet implemented
+[2023-06-24 21:35:23,490] [WARNING] [comm.py:152:init_deepspeed_backend] NCCL backend in DeepSpeed not yet implemented
+[2023-06-24 21:35:23,490] [WARNING] [comm.py:152:init_deepspeed_backend] NCCL backend in DeepSpeed not yet implemented
+Loading model 'checkpoints/tiiuae/falcon-40b/lit_model.pth' with {'block_size': 2048, 'vocab_size': 50254, 'padding_multiple': 512, 'padded_vocab_size': 65024, 'n_layer': 60, 'n_head': 128, 'n_embd': 8192, 'rotary_percentage': 1.0, 'parallel_residual': True, 'bias': False, 'n_query_groups': 8, 'shared_attention_norm': False, 'adapter_prompt_length': 10, 'adapter_start_layer': 2}
+<class 'lightning.fabric.fabric.Fabric'>
+<class 'lightning.fabric.fabric.Fabric'>

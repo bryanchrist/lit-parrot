@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "finetune/adapter.py", line 298, in <module>
+    CLI(setup)
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/jsonargparse/cli.py", line 85, in CLI
+    return _run_component(component, cfg_init)
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/jsonargparse/cli.py", line 147, in _run_component
+    return component(**cfg)
+  File "finetune/adapter.py", line 81, in setup
+    fabric = L.Fabric(devices=fabric_devices, strategy=strategy, precision=precision, accelerator='gpu')
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/fabric/fabric.py", line 98, in __init__
+    self._connector = _Connector(
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/fabric/connector.py", line 146, in __init__
+    self._accelerator_flag = self._choose_gpu_accelerator_backend()
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/fabric/connector.py", line 323, in _choose_gpu_accelerator_backend
+    raise RuntimeError("No supported gpu backend found!")
+RuntimeError: No supported gpu backend found!

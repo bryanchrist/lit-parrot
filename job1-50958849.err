@@ -1,0 +1,25 @@
+To execute the default application inside the container, run:
+singularity run --nv $CONTAINERDIR/pytorch-1.8.1.sif
+
+/usr/local/lib/python3.8/site-packages/requests/__init__.py:102: RequestsDependencyWarning: urllib3 (1.25.11) or chardet (None)/charset_normalizer (3.1.0) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({})/charset_normalizer ({}) doesn't match a supported "
+Traceback (most recent call last):
+  File "finetune/adapter_test.py", line 9, in <module>
+    import lightning as L
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/__init__.py", line 18, in <module>
+    from lightning.app import storage  # noqa: E402
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/__init__.py", line 24, in <module>
+    from lightning.app import components  # noqa: E402, F401
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/components/__init__.py", line 1, in <module>
+    from lightning.app.components.database.client import DatabaseClient
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/components/database/__init__.py", line 2, in <module>
+    from lightning.app.components.database.server import Database
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/components/database/server.py", line 29, in <module>
+    from lightning.app.core.work import LightningWork
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/core/__init__.py", line 1, in <module>
+    from lightning.app.core.app import LightningApp
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/core/app.py", line 43, in <module>
+    from lightning.app.utilities import frontend
+  File "/home/brc4cb/.local/lib/python3.8/site-packages/lightning/app/utilities/frontend.py", line 18, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'

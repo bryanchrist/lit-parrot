@@ -1,0 +1,10 @@
+True
+cuda:0
+0
+[2023-06-24 21:13:38,874] [INFO] [real_accelerator.py:110:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2023-06-24 21:13:39,355] [WARNING] [comm.py:152:init_deepspeed_backend] NCCL backend in DeepSpeed not yet implemented
+True
+cuda:0
+0
+[2023-06-24 21:13:43,052] [INFO] [real_accelerator.py:110:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2023-06-24 21:13:43,315] [WARNING] [comm.py:152:init_deepspeed_backend] NCCL backend in DeepSpeed not yet implemented

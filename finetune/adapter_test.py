@@ -11,11 +11,6 @@ import numpy as np
 import torch
 from lightning.fabric.strategies import DeepSpeedStrategy, XLAStrategy
 
-print(torch.cuda.is_available())
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-print(device)
-print(torch.cuda.current_device())
-
 # support running without installing as a package
 wd = Path(__file__).parent.parent.resolve()
 sys.path.append(str(wd))
@@ -46,7 +41,7 @@ eval_interval = 600
 save_interval = 1000
 eval_iters = 100
 log_interval = 1
-devices = 6
+devices = 4
 
 # Hyperparameters
 learning_rate = 9e-3
@@ -83,7 +78,7 @@ def setup(
     )
     # For multi-host TPU training, the device count for Fabric is limited to the count on a single host.
     fabric_devices = "auto" if (tpu and devices > 1) else devices
-    fabric = L.Fabric(devices=fabric_devices, strategy=strategy, precision=precision, accelerator='auto')
+    fabric = L.Fabric(devices=fabric_devices, strategy=strategy, precision=precision)
     fabric.launch(main, data_dir, checkpoint_dir, out_dir)
 
 
@@ -226,78 +221,7 @@ def validate(fabric: L.Fabric, model: torch.nn.Module, val_data: np.ndarray, tok
     return val_loss.item()
 
 
-def loss_fn(logits, targets):
-    # shift the targets such that output n predicts token n+1
-    logits = logits[..., :-1, :].contiguous()
-    targets = targets[..., 1:].contiguous()
-    loss = torch.nn.functional.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1)
-    return loss
 
 
-def get_batch(fabric: L.Fabric, data: list):
-    ix = torch.randint(len(data), (micro_batch_size,))
-
-    input_ids = [data[i]["input_ids"].type(torch.int64) for i in ix]
-    labels = [data[i]["labels"].type(torch.int64) for i in ix]
-
-    max_len = max(len(s) for s in input_ids) if fabric.device.type != "xla" else max_seq_length
-
-    def pad_right(x, pad_id):
-        # pad right based on the longest sequence
-        n = max_len - len(x)
-        return torch.cat((x, torch.full((n,), pad_id, dtype=x.dtype)))
-
-    x = torch.stack([pad_right(x, pad_id=0) for x in input_ids])
-    y = torch.stack([pad_right(x, pad_id=-1) for x in labels])
-
-    if fabric.device.type in ("mps", "xla"):
-        x, y = fabric.to_device((x, y))
-    else:
-        x, y = fabric.to_device((x.pin_memory(), y.pin_memory()))
-
-    return x, y
 
 
-def load_datasets(data_dir: Path):
-    train_data = torch.load(data_dir / "train.pt")
-    val_data = torch.load(data_dir / "test.pt")
-    return train_data, val_data
-
-
-def save_model_checkpoint(fabric, model, file_path: Path):
-    file_path = Path(file_path)
-
-    if isinstance(fabric.strategy, DeepSpeedStrategy):
-        from deepspeed.utils.zero_to_fp32 import get_fp32_state_dict_from_zero_checkpoint
-
-        tmp_path = file_path.with_suffix(".tmp")
-        fabric.save(tmp_path, {"model": model})
-        fabric.barrier()
-        if fabric.global_rank == 0:
-            # Create a consolidated checkpoint with the same name next to the deepspeed checkpoint
-            # and only keep the adapter weights
-            state_dict = get_fp32_state_dict_from_zero_checkpoint(tmp_path)
-            state_dict = adapter_state_from_state_dict(state_dict)
-            torch.save(state_dict, file_path)
-            shutil.rmtree(tmp_path)
-    else:
-        state_dict = adapter_state_from_state_dict(model.state_dict())
-        if fabric.global_rank == 0:
-            torch.save(state_dict, file_path)
-        fabric.barrier()
-
-
-if __name__ == "__main__":
-    # Uncomment this line if you see an error: "Expected is_sm80 to be true, but got false"
-    # torch.backends.cuda.enable_flash_sdp(False)
-    torch.set_float32_matmul_precision("high")
-
-    from jsonargparse.cli import CLI
-
-    warnings.filterwarnings(
-        # false positive using deepspeed: https://github.com/Lightning-AI/lightning/pull/17761#discussion_r1219705307
-        "ignore",
-        message="Remove `.no_backward_sync()` from your code",
-    )
-
-    CLI(setup)

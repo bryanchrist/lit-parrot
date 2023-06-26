@@ -1,0 +1,21 @@
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+/home/brc4cb/.conda/envs/falcon_40B/lib/python3.9/site-packages/lightning/fabric/plugins/environments/slurm.py:165: PossibleUserWarning: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python finetune/adapter.py ...
+  rank_zero_warn(
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/2
+/gpfs/gpfs0/scratch/brc4cb/lit-parrot/finetune/adapter.py:294: JsonargparseDeprecationWarning: 
+    Only use the public API as described in https://jsonargparse.readthedocs.io/en/stable/#api-reference.
+    Importing from jsonargparse.cli is kept only to avoid breaking code that does not correctly use the public
+    API. It will no longer be available from v5.0.0.
+
+  from jsonargparse.cli import CLI
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/2
+Enabling DeepSpeed FP16.
+[rank: 1] Global seed set to 1338
+[rank: 0] Global seed set to 1337
+/var/spool/slurm/slurmd/job51064294/slurm_script: line 20: 130183 Killed                  python finetune/adapter.py
+slurmstepd: error: Detected 174 oom-kill event(s) in StepId=51064294.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.
